@@ -14,7 +14,7 @@ model User {
   name      String?
   password  String?
   image     String?
-  emailVerifified      DateTime?
+  emailVerified      DateTime?
   accounts  Account[]
 }
 

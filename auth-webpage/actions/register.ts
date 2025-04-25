@@ -4,7 +4,8 @@ import { RegisterSchema } from "@/schemas"
 import { db } from "@/lib/db"
 import { startTransition } from "react"
 import { z } from "zod"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
+import { getUserByEmail } from "@/data/user"
 
  
 async function register (values: z.infer<typeof RegisterSchema> ) {
@@ -17,12 +18,8 @@ async function register (values: z.infer<typeof RegisterSchema> ) {
     const { email, password, name } = validatedFields.data
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    const existingUser = await db.user.findUnique({
-        where: {
-            email: "mail@example.com"
-        }
-    })
-
+    const existingUser = await getUserByEmail(email)
+    
     if (existingUser) {
         return { error: "Email already taken" }
     }
