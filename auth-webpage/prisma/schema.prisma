@@ -10,13 +10,12 @@ generator client {
 
 model User {
   id        String      @id @default(cuid())
-  createdAt DateTime @default(now())
+  email     String?     @unique
   name      String?
-  email String @unique
-  emailVerifified DateTime?
-  image String?
   password  String?
-  accounts Account[]
+  image     String?
+  emailVerifified      DateTime?
+  accounts  Account[]
 }
 
 model Account {
